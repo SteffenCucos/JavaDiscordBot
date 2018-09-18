@@ -52,23 +52,6 @@ public class TestEventHandlerFactory {
         }
     }
 
-    /*@Test
-    public void TestFormatMessage(){
-        String[] messages = {"@" + Main.BOT_NAME + " !Ping",
-                             "@" + Main.BOT_NAME + "!Ping",
-                             "@" + Main.BOT_NAME + " ",
-                             "@" + Main.BOT_NAME + " !Ping     a    b    c"};
-        String[] expected = {"!Ping",
-                             "!Ping",
-                             "",
-                             "!Ping a b c"};
-
-        for(int i = 0; i< Math.max(messages.length, expected.length); i++){
-            String got = handlerFactory.formatMessage(messages[i]);
-            assertTrue(got.equals(expected[i]));
-        }
-    }*/
-
     @Test
     public void TestMessageDirectedAtBot(){
         String[] trueMessages = {"@" + Main.BOT_NAME + "",
