@@ -1,8 +1,4 @@
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -32,8 +28,6 @@ public class WikiEventHandler extends EventHandler  {
 
         try {
             URL url = new URL(urlString);
-            /*JSONTokener jsonTokener = new JSONTokener(url.openStream());
-            JSONObject root = new JSONObject(jsonTokener);*/
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -51,7 +45,6 @@ public class WikiEventHandler extends EventHandler  {
             }
             in.close();
 
-            //System.out.println(content.toString());
             JSONArray myResponse = new JSONArray(content.toString().trim());
 
             JSONArray suggestions = myResponse.getJSONArray(1);

@@ -1,4 +1,3 @@
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class NullEventHandler extends EventHandler{
 

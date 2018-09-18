@@ -1,5 +1,3 @@
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 
 public class DefaultEventHandler extends EventHandler {
 

@@ -1,3 +1,4 @@
+
 public abstract class EventHandler implements GenericEventHandler {
 
     public MessageEvent messageEvent;

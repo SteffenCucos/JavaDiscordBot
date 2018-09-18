@@ -1,7 +1,7 @@
 
 public interface GenericEventHandler {
 
-    public void handleEvent() throws Exception;
-    public void sendMessage(String message);
+    void handleEvent() throws Exception;
+    void sendMessage(String message);
 
 }
