@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'Steffen'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile "org.mockito:mockito-core:2.+"
+    testCompile 'junit:junit:4.12'
+    compile 'net.dv8tion:JDA:3.7.1_419'
+}
