@@ -1,3 +1,4 @@
+package EventHandlers;
 
 public interface GenericEventHandler {
 

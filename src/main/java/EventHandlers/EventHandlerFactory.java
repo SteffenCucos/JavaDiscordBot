@@ -1,8 +1,7 @@
-import EventHandlers.EventHandler;
-import EventHandlers.HelpEventHandler;
-import EventHandlers.NullEventHandler;
-import EventHandlers.WikiEventHandler;
+package EventHandlers;
+
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import Main.Main;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ public class EventHandlerFactory {
     public static final int NAME_LENGTH = Main.BOT_NAME.length();
     public static final String PONG_STRING = "Pong!";
     public static final String UNKNOWN_COMMAND = "Unknown command.";
-    public static final String HELP_STRING = "Available Commands:\n!Help\n!Ping\n!Wiki";
 
     public enum COMMAND {
         PING,
@@ -66,6 +64,6 @@ public class EventHandlerFactory {
 
     public boolean messageDirectedAtBot(String message){
         if(message.length() < NAME_LENGTH + 1){ return false; }
-        return message.equals("@"+Main.BOT_NAME);
+        return message.equals("@"+ Main.BOT_NAME);
     }
 }

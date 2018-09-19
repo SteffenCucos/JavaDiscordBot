@@ -1,8 +1,11 @@
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;
-import org.junit.Test;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.mockito.Mockito;
+import org.junit.Test;
+import EventHandlers.*;
+import Main.Main;
+
 import static org.junit.Assert.assertTrue;
 
 public class TestEventHandlerFactory {
@@ -14,8 +17,8 @@ public class TestEventHandlerFactory {
 
         String author = "TestName";
         String[] messages = new String[]{"@" + Main.BOT_NAME + " !Ping",
-                                         "@" + Main.BOT_NAME + " !ping",
-                                         "@" + Main.BOT_NAME + " !pInG"};
+                "@" + Main.BOT_NAME + " !ping",
+                "@" + Main.BOT_NAME + " !pInG"};
 
         for(String message: messages){
             MessageReceivedEvent event = createEvent(author,message);
@@ -26,12 +29,12 @@ public class TestEventHandlerFactory {
         verifyGetEventHandler(EventHandlerFactory.UNKNOWN_COMMAND,event,"We received a message from " + author + ": " + "@" + Main.BOT_NAME + " Ping");
     }
 
-    @Test
+   /* @Test
     public void TestHelpCommand(){
         String author = "TestName";
         String[] messages = new String[]{"@" + Main.BOT_NAME + " !Help",
-                                         "@" + Main.BOT_NAME + " !help",
-                                         "@" + Main.BOT_NAME + " !hElP"};
+                "@" + Main.BOT_NAME + " !help",
+                "@" + Main.BOT_NAME + " !hElP"};
 
         for(String message: messages){
             MessageReceivedEvent event = createEvent(author,message);
@@ -40,7 +43,7 @@ public class TestEventHandlerFactory {
 
         MessageReceivedEvent event = createEvent(author,"@SteffenBot Help");//forgot the "!" char
         verifyGetEventHandler(EventHandlerFactory.UNKNOWN_COMMAND,event,"We received a message from " + author + ": " + "@" + Main.BOT_NAME + " Help");
-    }
+    }*/
 
     @Test
     public void TestNullEvent(){
@@ -55,16 +58,16 @@ public class TestEventHandlerFactory {
     @Test
     public void TestMessageDirectedAtBot(){
         String[] trueMessages = {"@" + Main.BOT_NAME + "",
-                                 "@" + Main.BOT_NAME,
-                                 "@SteffenBot",};
+                "@" + Main.BOT_NAME,
+                "@SteffenBot",};
 
         String[] falseMessages = {"@" + Main.BOT_NAME.toLowerCase(),
-                                  "@" + Main.BOT_NAME.toUpperCase(),
-                                  "@" + Main.BOT_NAME + " !Ping",
-                                  "@" + Main.BOT_NAME + " !Ping",
-                                  "@" + Main.BOT_NAME + " ",
-                                  Main.BOT_NAME,
-                                  ""};
+                "@" + Main.BOT_NAME.toUpperCase(),
+                "@" + Main.BOT_NAME + " !Ping",
+                "@" + Main.BOT_NAME + " !Ping",
+                "@" + Main.BOT_NAME + " ",
+                Main.BOT_NAME,
+                ""};
         for(String s: trueMessages){
             assertTrue(handlerFactory.messageDirectedAtBot(s));
         }

@@ -1,5 +1,6 @@
+package EventHandlers;
 
-public class NullEventHandler extends EventHandler{
+public class NullEventHandler extends EventHandler {
 
     public NullEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;

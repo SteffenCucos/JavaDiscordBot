@@ -1,3 +1,5 @@
+package EventHandlers;
+
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

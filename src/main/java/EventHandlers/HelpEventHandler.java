@@ -1,7 +1,9 @@
+package EventHandlers;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class HelpEventHandler extends EventHandler  {
+public class HelpEventHandler extends EventHandler {
 
     public static final String HelpPingString = "'!Ping' will prompt the bot to respond with 'Pong!'.";
     public static final String HelpWikiString = "Asking the bot '!Wiki' followed by a topic will prompt the bot to search for and paste into chat the most relevant Wikipedia article to the topic.";

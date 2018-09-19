@@ -1,3 +1,4 @@
+package EventHandlers;
 
 public class InvalidEntityException extends RuntimeException{
     public InvalidEntityException(String message) {

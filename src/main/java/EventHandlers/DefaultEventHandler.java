@@ -1,8 +1,8 @@
-import EventHandlers.EventHandler;
+package EventHandlers;
 
 public class DefaultEventHandler extends EventHandler {
 
-    String defaultString;
+    public String defaultString;
 
     public DefaultEventHandler(MessageEvent messageEvent, String defaultString) {
         this.messageEvent = messageEvent;

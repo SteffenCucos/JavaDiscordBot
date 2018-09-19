@@ -1,10 +1,12 @@
+package EventHandlers;
+
 import org.json.JSONArray;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class WikiEventHandler extends EventHandler  {
+public class WikiEventHandler extends EventHandler {
 
     private static final String baseURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search=";
     private static final String endURL = "&limit=100&namespace=0&format=json";

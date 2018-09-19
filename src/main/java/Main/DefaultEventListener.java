@@ -1,3 +1,5 @@
+package Main;
+
 import EventHandlers.EventHandler;
 import EventHandlers.EventHandlerFactory;
 import EventHandlers.InvalidEntityException;

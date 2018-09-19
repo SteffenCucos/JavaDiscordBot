@@ -1,9 +1,10 @@
+package EventHandlers;
 
 public abstract class EventHandler implements GenericEventHandler {
 
     public MessageEvent messageEvent;
 
-    public void handleEvent() throws InvalidEntityException{
+    public void handleEvent() throws InvalidEntityException {
         if(this.messageEvent.event == null) {
             throw new InvalidEntityException("null event!");
         }
