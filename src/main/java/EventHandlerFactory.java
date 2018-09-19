@@ -6,7 +6,7 @@ public class EventHandlerFactory {
     public static final int NAME_LENGTH = Main.BOT_NAME.length();
     public static final String PONG_STRING = "Pong!";
     public static final String UNKNOWN_COMMAND = "Unknown command.";
-    public static final String HELP_STRING = "Help_Goes_Here";
+    public static final String HELP_STRING = "Available Commands:\n!Help\n!Ping\n!Wiki";
 
     public enum COMMAND {
         PING,
@@ -37,10 +37,10 @@ public class EventHandlerFactory {
         switch (command) {
             case PING:
                 return new DefaultEventHandler(messageEvent, PONG_STRING);
-            case HELP:
-                return new DefaultEventHandler(messageEvent, HELP_STRING);
             case UNKNOWN:
                 return new DefaultEventHandler(messageEvent, UNKNOWN_COMMAND);
+            case HELP:
+                return new HelpEventHandler(messageEvent);
             case WIKI:
                 return new WikiEventHandler(messageEvent);
             case NULL:
