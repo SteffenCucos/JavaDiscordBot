@@ -1,3 +1,4 @@
+import EventHandlers.EventHandler;
 
 public class DefaultEventHandler extends EventHandler {
 

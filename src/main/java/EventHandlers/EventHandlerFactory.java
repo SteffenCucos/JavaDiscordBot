@@ -1,3 +1,7 @@
+import EventHandlers.EventHandler;
+import EventHandlers.HelpEventHandler;
+import EventHandlers.NullEventHandler;
+import EventHandlers.WikiEventHandler;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.HashMap;
 import java.util.Map;

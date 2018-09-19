@@ -15,10 +15,6 @@ public class HelpEventHandler extends EventHandler  {
         put("", HelpBasicString);
     }};
 
-
-
-
-
     public HelpEventHandler(MessageEvent messageEvent){
         this.messageEvent = messageEvent;
     }
