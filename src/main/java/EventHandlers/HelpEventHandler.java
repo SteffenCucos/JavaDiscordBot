@@ -6,7 +6,7 @@ import java.util.Map;
 public class HelpEventHandler extends EventHandler {
 
     public static final String HelpPingString = "'!Ping' will prompt the bot to respond with 'Pong!'.";
-    public static final String HelpWikiString = "Asking the bot '!Wiki' followed by a topic will prompt the bot to search for and paste into chat the most relevant Wikipedia article to the topic.";
+    public static final String HelpWikiString = "'!Wiki' followed by a topic will prompt the bot to search for and paste into chat the most relevant Wikipedia article to the topic.";
     public static final String HelpHelpString = "'!Help' followed by another valid command will prompt the bot to give you instructions on how to use that command.\n'!Help' on its own will give a list of all available commands.";
     public static final String HelpBasicString = "Available Commands:\n!Help\n!Ping\n!Wiki";
 

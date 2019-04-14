@@ -15,6 +15,7 @@ public class EventHandlerFactory {
         HELP,
         UNKNOWN,
         WIKI,
+    	PYTHON,
         NULL
     }
 
@@ -22,6 +23,7 @@ public class EventHandlerFactory {
        put("!ping",COMMAND.PING);
        put("!help",COMMAND.HELP);
        put("!wiki",COMMAND.WIKI);
+       put("!python", COMMAND.PYTHON);
        put("",COMMAND.UNKNOWN);
     }};
 
@@ -45,6 +47,8 @@ public class EventHandlerFactory {
                 return new HelpEventHandler(messageEvent);
             case WIKI:
                 return new WikiEventHandler(messageEvent);
+            case PYTHON:
+            	return new PythonEventHandler(messageEvent);
             case NULL:
                 return new NullEventHandler(messageEvent);
             default:
