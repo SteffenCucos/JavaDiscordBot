@@ -11,8 +11,10 @@ public abstract class EventHandler implements GenericEventHandler {
     }
 
     public void sendMessage(String message){
-        this.messageEvent.event.getChannel().sendMessage(message).queue();
-        System.out.println(this.toString());
+    	if(message != null && message.length() > 0){
+            this.messageEvent.event.getChannel().sendMessage(message).queue();
+            System.out.println(this.toString());
+    	}
     }
 
     @Override
