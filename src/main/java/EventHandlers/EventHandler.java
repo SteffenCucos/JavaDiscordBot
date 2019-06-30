@@ -1,5 +1,7 @@
 package EventHandlers;
 
+import java.io.File;
+
 public abstract class EventHandler implements GenericEventHandler {
 
     public MessageEvent messageEvent;
@@ -8,6 +10,10 @@ public abstract class EventHandler implements GenericEventHandler {
         if(this.messageEvent.event == null) {
             throw new InvalidEntityException("null event!");
         }
+    }
+    
+    public void sendFile(File file) {
+    	this.messageEvent.event.getChannel().sendFile(file).queue();
     }
 
     public void sendMessage(String message){
@@ -21,7 +27,6 @@ public abstract class EventHandler implements GenericEventHandler {
     public String toString(){
         String message = messageEvent.messageDisplay;
         String author = messageEvent.author.getName();
-
-        return "We received a message from " + author + ": " + message;
+        return "Received a message from " + author + ": " + message;
     }
 }

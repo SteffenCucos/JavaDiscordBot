@@ -15,13 +15,14 @@ public class PythonEventHandler extends EventHandler  {
 		 RUN,
 		 CODE,
 		 CREATE,
-		 NULL;
+		 NULL
 	}
 	public TYPE type = TYPE.NULL;
 	
     public PythonEventHandler(MessageEvent messageEvent){
         this.messageEvent = messageEvent;
         String[] message = messageEvent.message;
+        type = TYPE.NULL;
         if (this.messageEvent.message.length > 2) {
         	if (message[2].equals("run")) {
         		type = TYPE.RUN;
@@ -77,7 +78,6 @@ public class PythonEventHandler extends EventHandler  {
     		for(String s : params) {
     			formatedParams += " " + s;
     		}
-    		sendMessage(formatedParams);
 	    	Process p = Runtime.getRuntime().exec("python " + formatedParams);
 	    	BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	        BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
@@ -136,6 +136,5 @@ public class PythonEventHandler extends EventHandler  {
         	lines += line + "\n";
         }
 	    return lines;
-    	
     }
 }

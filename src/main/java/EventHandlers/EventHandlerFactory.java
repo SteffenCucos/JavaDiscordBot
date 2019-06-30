@@ -2,6 +2,8 @@ package EventHandlers;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import Main.Main;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,13 +11,17 @@ public class EventHandlerFactory {
     public static final int NAME_LENGTH = Main.BOT_NAME.length();
     public static final String PONG_STRING = "Pong!";
     public static final String UNKNOWN_COMMAND = "Unknown command.";
-
+    
+    public static File directory = new File(".");
+    public static final File STARTPATH = new File(".");
+    
     public enum COMMAND {
         PING,
         HELP,
         UNKNOWN,
         WIKI,
     	PYTHON,
+    	COMMAND,
         NULL
     }
 
@@ -24,6 +30,7 @@ public class EventHandlerFactory {
        put("!help",COMMAND.HELP);
        put("!wiki",COMMAND.WIKI);
        put("!python", COMMAND.PYTHON);
+       put("!command", COMMAND.COMMAND);
        put("",COMMAND.UNKNOWN);
     }};
 
@@ -39,20 +46,14 @@ public class EventHandlerFactory {
         COMMAND command = validateMessageEvent(messageEvent);
 
         switch (command) {
-            case PING:
-                return new DefaultEventHandler(messageEvent, PONG_STRING);
-            case UNKNOWN:
-                return new DefaultEventHandler(messageEvent, UNKNOWN_COMMAND);
-            case HELP:
-                return new HelpEventHandler(messageEvent);
-            case WIKI:
-                return new WikiEventHandler(messageEvent);
-            case PYTHON:
-            	return new PythonEventHandler(messageEvent);
-            case NULL:
-                return new NullEventHandler(messageEvent);
-            default:
-                return new NullEventHandler(messageEvent);
+            case PING:   	return new DefaultEventHandler(messageEvent, PONG_STRING);
+            case UNKNOWN:	return new DefaultEventHandler(messageEvent, UNKNOWN_COMMAND);
+            case HELP:   	return new HelpEventHandler(messageEvent);
+            case WIKI:   	return new WikiEventHandler(messageEvent);
+            case PYTHON: 	return new PythonEventHandler(messageEvent);
+            case COMMAND:	return new CommandEventHandler(messageEvent);
+            case NULL:   	return new NullEventHandler(messageEvent);
+            default:     	return new NullEventHandler(messageEvent);
         }
     }
 
