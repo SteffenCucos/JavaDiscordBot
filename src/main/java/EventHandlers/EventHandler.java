@@ -13,7 +13,12 @@ public abstract class EventHandler implements GenericEventHandler {
     }
     
     public void sendFile(File file) {
-    	this.messageEvent.event.getChannel().sendFile(file).queue();
+    	try {
+        	this.messageEvent.event.getChannel().sendFile(file).queue();
+    	} catch(Exception e) {
+    		sendMessage(e.getMessage());
+    	}
+
     }
 
     public void sendMessage(String message){

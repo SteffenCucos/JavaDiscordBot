@@ -21,20 +21,20 @@ public class PythonEventHandler extends EventHandler  {
 	
     public PythonEventHandler(MessageEvent messageEvent){
         this.messageEvent = messageEvent;
-        String[] message = messageEvent.message;
-        type = TYPE.NULL;
-        if (this.messageEvent.message.length > 2) {
-        	if (message[2].equals("run")) {
-        		type = TYPE.RUN;
-        	} 
-        	else if (message[2].equals("create")) {
-        		type = TYPE.CREATE;
-        	}
-        	else if(message[2].contains("```")){
-        		type = TYPE.CODE;
-        	}
-        }
-        	
+        String command = messageEvent.commandArgs.get(0);
+        switch(command) {
+	        case "run":
+	        	type = TYPE.RUN; break;
+	        case "create":
+	        	type = TYPE.CREATE; break;
+	        default:
+	        	if(command.contains("```")) {
+	        		type = type.CODE;
+	        	} else {
+	        		type = TYPE.NULL;
+	        	}
+	        	
+	    }	
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PythonEventHandler extends EventHandler  {
 	        	output = runCode("DEFAULT.py");
 	    		break;
 	    	case CREATE://creates a python.py filew
-	    		String filename = messageEvent.message[3];
+	    		String filename = messageEvent.message.get(3);
 	    		createCode(parseCode(), filename);
 	    		break;
 			default:
@@ -60,13 +60,13 @@ public class PythonEventHandler extends EventHandler  {
     }
     
     
-    private String[] extractParams(String[] message) {
+    private String[] extractParams(List<String> message) {
     	String[] params = new String[0];
-    	int numParams = message.length - 3;//1st is @BOT, 2nd is !python, 3rd is run, 4th is filename.py, 5th - nth = params
+    	int numParams = message.size() - 3;//1st is @BOT, 2nd is !python, 3rd is run, 4th is filename.py, 5th - nth = params
     	if (numParams > 0) {
     		params = new String[numParams];
     		for (int i = 0; i < numParams; i ++) {
-    			params[i] = message[i + 3]; 
+    			params[i] = message.get(i + 3); 
     		}
     	}
 		return params;

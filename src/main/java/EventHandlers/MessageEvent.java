@@ -1,5 +1,9 @@
 package EventHandlers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -12,7 +16,8 @@ public class MessageEvent  {
     message[1] = "Some command"
     message[2 ...] = command params
     */
-    public String[] message;
+    public List<String> commandArgs;
+    public List<String> message;
     public String commandString;
     public String pointedAt;
     public User author;
@@ -29,10 +34,13 @@ public class MessageEvent  {
         this.author = event.getAuthor();
         this.messageRaw = event.getMessage().getContentRaw();
         this.messageDisplay = event.getMessage().getContentDisplay();
-        this.message = event.getMessage().getContentDisplay().split(" ");
-        this.pointedAt = message[0];
-        if(this.message.length > 1){
-            this.commandString = message[1];
+        this.message = new ArrayList<String>(Arrays.asList(event.getMessage().getContentDisplay().trim().replaceAll(" +", " ").split(" ")));
+        
+        this.commandArgs = this.message.subList(2, message.size());
+        
+        this.pointedAt = message.get(0);
+        if(this.message.size() > 1){
+            this.commandString = message.get(1);
         } else {
             this.commandString = "";
         }

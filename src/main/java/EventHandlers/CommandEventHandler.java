@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class CommandEventHandler extends EventHandler {
 	
@@ -23,8 +24,8 @@ public class CommandEventHandler extends EventHandler {
 	
 	public CommandEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;
-        String[] message = messageEvent.message;
-        switch(message[2]) {
+        List<String> message = messageEvent.message;
+        switch(message.get(2)) {
 	        case "cd":
 	        	type = TYPE.CD; break;
 	        case "dir":
@@ -40,9 +41,11 @@ public class CommandEventHandler extends EventHandler {
 	
 	@Override
 	public void handleEvent() {
+		List<String> args = messageEvent.commandArgs.subList(1, messageEvent.commandArgs.size());
+		
 		switch(type) {
 			case CD:
-				String newDir = cd();
+				String newDir = cd(args);
 				sendMessage(newDir);
 				break;
 			case DIR:
@@ -50,7 +53,7 @@ public class CommandEventHandler extends EventHandler {
 				sendMessage(dir);
 				break;
 			case CP:
-				Entry<File, String> toSend = cp();
+				Entry<File, String> toSend = cp(args);
 				if(toSend.getKey() == null) {
 					sendMessage(toSend.getValue());
 				} else {
@@ -58,7 +61,7 @@ public class CommandEventHandler extends EventHandler {
 				}
 				break;
 			case CAT:
-				String cat = getCatString();
+				String cat = getCatString(args);
 				sendMessage(cat);
 				break;
 			default:
@@ -66,8 +69,8 @@ public class CommandEventHandler extends EventHandler {
 		}
 	}
 	
-	private Entry<File, String> cp() {
-		String copy = messageEvent.message[3];
+	private Entry<File, String> cp(List<String> args) {
+		String copy = args.stream().collect(Collectors.joining(" "));
 		try {
 			String path = EventHandlerFactory.directory.getCanonicalPath() + "/" + copy;
 			File file = new File(path);
@@ -80,8 +83,8 @@ public class CommandEventHandler extends EventHandler {
 		}
 	}
 
-	private String cd() {
-		String dest = messageEvent.message[3];
+	private String cd(List<String> args) {
+		String dest = args.stream().collect(Collectors.joining(" "));
 		try {
 			if(dest.equals("%STARTPATH%")) {//resets the directory to where it started
 				EventHandlerFactory.directory = EventHandlerFactory.STARTPATH;
@@ -95,9 +98,9 @@ public class CommandEventHandler extends EventHandler {
 		
 	}
 
-	public String getCatString() {
+	public String getCatString(List<String> args) {
 		String cat = "";
-		String fname = messageEvent.message[3];
+		String fname = args.stream().collect(Collectors.joining(" "));
 		try {
 			File f = new File(EventHandlerFactory.directory.getCanonicalPath() + "/"  + fname);
 			boolean isFile = f.isFile();
@@ -136,5 +139,4 @@ public class CommandEventHandler extends EventHandler {
 			return dir;
 		} catch (IOException e) { return "dir failed"; }
 	}
-	
 }

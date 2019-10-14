@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.stream.Collectors;
 
 public class WikiEventHandler extends EventHandler {
 
@@ -72,17 +73,6 @@ public class WikiEventHandler extends EventHandler {
     }
 
     public String createSearchString(){
-        int numArgs = messageEvent.message.length;
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < numArgs; i++) {
-            if(i == numArgs -1){
-                sb.append(messageEvent.message[i]);
-            } else {
-                sb.append(messageEvent.message[i] + "%20");
-            }
-        }
-
-        return sb.toString();
+        return messageEvent.commandArgs.stream().collect(Collectors.joining("%20"));
     }
 }

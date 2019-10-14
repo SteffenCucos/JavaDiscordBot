@@ -58,7 +58,7 @@ public class EventHandlerFactory {
     }
 
     public COMMAND validateMessageEvent(MessageEvent event) {
-        String receiver = event.message[0];
+        String receiver = event.pointedAt;
         String commandString = event.commandString;
         if (!messageDirectedAtBot(receiver)) { return COMMAND.NULL; }
         if(commandString.equals("")) { return COMMAND.UNKNOWN; }//message[] looks like this {"@BotName"}

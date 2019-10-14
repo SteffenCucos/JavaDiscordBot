@@ -34,19 +34,7 @@ public class HelpEventHandler extends EventHandler {
 
     @Override
     public void handleEvent() throws InvalidEntityException {
-        String[] args = parseHelpCommand();//args[0] will be the command
-        String helpMessage = HelpMap.getOrDefault(args[0].toLowerCase(), HelpBasicString);
+        String helpMessage = HelpMap.getOrDefault(messageEvent.message.get(2).toLowerCase(), HelpBasicString);
         sendMessage(helpMessage);
-    }
-
-    public String[] parseHelpCommand(){
-        int numArgs = messageEvent.message.length;
-        if(numArgs == 2){ return new String[] {""}; }
-
-        String[] args = new String[numArgs];
-        for (int i = 2; i < numArgs; i++) {
-            args[i-2] = messageEvent.message[i];
-        }
-        return args;
     }
 }
