@@ -108,12 +108,11 @@ public class CommandEventHandler extends EventHandler {
 			if(f.isFile()) {
 				//read the file
 				List<String> contents = Files.readAllLines(Paths.get(f.getAbsolutePath()), StandardCharsets.UTF_8);
-				String formatted = "```";
+				String message = "";
 				for (String line : contents) {
-					formatted += "\n" + line;
+					message += "\n" + line;
 				}
-				formatted += "```";
-				return formatted;
+				return EventHandler.formatMessage(message);
 			} else if (isDir) {
 				return f.getName() + " is a directory not a file.";
 			} else {

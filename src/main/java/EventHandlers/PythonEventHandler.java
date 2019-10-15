@@ -86,22 +86,19 @@ public class PythonEventHandler extends EventHandler  {
 	        String error = parseReadLines(stdError);
 	        String toSend = "";
 	        if (!output.equals("")) {
-	        	toSend += "```\n-----START-OUTPUT------\n"
+	        	toSend += "\n-----START-OUTPUT------\n"
 		        		 + output 
-		        		 + "-----END-OUTPUT------```\n";
+		        		 + "-----END-OUTPUT------\n";
 	        } 
 	        if (!error.equals("")) {
-	        	toSend += "```\n-----START-ERROR------\n"
+	        	toSend += "\n-----START-ERROR------\n"
 		        		+ error
-		        		+ "-----END-ERROR------```";
+		        		+ "-----END-ERROR------";
 	        }
-	        if(output.equals("") && error.equals("")) {
-	        	toSend += "";
-	        }
-	        return toSend;
+	        return EventHandler.formatMessage(toSend);
     	}  catch (Exception e) {
 	    	System.out.println(e.getMessage());
-	    	return "500 error";
+	    	return "500 Error";
 	    }
 	}
     

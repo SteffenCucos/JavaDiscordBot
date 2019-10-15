@@ -27,6 +27,11 @@ public abstract class EventHandler implements GenericEventHandler {
             System.out.println(this.toString());
     	}
     }
+    
+    public static String formatMessage(String message) {
+    	String formatted = message.substring(0, Math.min(1994, message.length()));
+    	return "```" + formatted + "```";
+    }
 
     @Override
     public String toString(){
