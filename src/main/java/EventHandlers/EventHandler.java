@@ -32,7 +32,11 @@ public abstract class EventHandler implements GenericEventHandler {
     	String formatted = message.substring(0, Math.min(1994, message.length()));
     	return "```" + formatted + "```";
     }
-
+    
+    public boolean supportsLock() {
+    	return false;
+    }
+    
     @Override
     public String toString(){
         String message = messageEvent.messageDisplay;

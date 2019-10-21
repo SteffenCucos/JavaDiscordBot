@@ -29,12 +29,17 @@ public class PythonEventHandler extends EventHandler  {
 	        	type = TYPE.CREATE; break;
 	        default:
 	        	if(command.contains("```")) {
-	        		type = type.CODE;
+	        		type = TYPE.CODE;
 	        	} else {
 	        		type = TYPE.NULL;
 	        	}
 	        	
 	    }	
+    }
+    
+    @Override
+    public boolean supportsLock() {
+    	return true;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class PythonEventHandler extends EventHandler  {
     	String output = "";
     	switch(type) {
 	    	case RUN://runs a python.py file
-	    		String[] params = extractParams(messageEvent.message);
+	    		String[] params = extractParams(messageEvent.commandArgs);
 	    		output = runWithParams(params);
 	        	break;
 	    	case CODE://idle style one liners
@@ -50,7 +55,7 @@ public class PythonEventHandler extends EventHandler  {
 	        	output = runCode("DEFAULT.py");
 	    		break;
 	    	case CREATE://creates a python.py filew
-	    		String filename = messageEvent.message.get(3);
+	    		String filename = messageEvent.commandArgs.get(1);
 	    		createCode(parseCode(), filename);
 	    		break;
 			default:
@@ -62,11 +67,11 @@ public class PythonEventHandler extends EventHandler  {
     
     private String[] extractParams(List<String> message) {
     	String[] params = new String[0];
-    	int numParams = message.size() - 3;//1st is @BOT, 2nd is !python, 3rd is run, 4th is filename.py, 5th - nth = params
+    	int numParams = message.size() - 1;
     	if (numParams > 0) {
     		params = new String[numParams];
     		for (int i = 0; i < numParams; i ++) {
-    			params[i] = message.get(i + 3); 
+    			params[i] = message.get(i + 1); 
     		}
     	}
 		return params;

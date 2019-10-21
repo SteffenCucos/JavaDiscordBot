@@ -17,6 +17,11 @@ public class WikiEventHandler extends EventHandler {
     }
 
     @Override
+    public boolean supportsLock() {
+    	return true;
+    }
+    
+    @Override
     public void handleEvent() throws InvalidEntityException {
         String link = doSearch();
         if(!(link.equals(""))){

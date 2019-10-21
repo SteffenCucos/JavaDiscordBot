@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class CommandEventHandler extends EventHandler {
 	
+	public static boolean supportsLock = true;
+	
 	enum TYPE {
 		 CD,
 		 DIR,
@@ -24,8 +26,8 @@ public class CommandEventHandler extends EventHandler {
 	
 	public CommandEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;
-        List<String> message = messageEvent.message;
-        switch(message.get(2)) {
+        List<String> commandArgs = messageEvent.commandArgs;
+        switch(commandArgs.get(0)) {
 	        case "cd":
 	        	type = TYPE.CD; break;
 	        case "dir":
@@ -37,6 +39,11 @@ public class CommandEventHandler extends EventHandler {
 	        default:
 	        	type = TYPE.NULL;
         }
+	}
+	
+	@Override
+	public boolean supportsLock() {
+		return true;
 	}
 	
 	@Override
@@ -86,7 +93,7 @@ public class CommandEventHandler extends EventHandler {
 	private String cd(List<String> args) {
 		String dest = args.stream().collect(Collectors.joining(" "));
 		try {
-			if(dest.equals("%STARTPATH%")) {//resets the directory to where it started
+			if(dest.equals("%RESET%")) {//resets the directory to where it started
 				EventHandlerFactory.directory = EventHandlerFactory.STARTPATH;
 				return EventHandlerFactory.directory.getCanonicalPath();
 			} else {
@@ -105,7 +112,7 @@ public class CommandEventHandler extends EventHandler {
 			File f = new File(EventHandlerFactory.directory.getCanonicalPath() + "/"  + fname);
 			boolean isFile = f.isFile();
 			boolean isDir = f.isDirectory();
-			if(f.isFile()) {
+			if(isFile) {
 				//read the file
 				List<String> contents = Files.readAllLines(Paths.get(f.getAbsolutePath()), StandardCharsets.UTF_8);
 				String message = "";

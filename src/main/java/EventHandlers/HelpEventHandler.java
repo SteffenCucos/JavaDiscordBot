@@ -33,8 +33,14 @@ public class HelpEventHandler extends EventHandler {
     }
 
     @Override
+    public boolean supportsLock() {
+    	return true;
+    }
+    
+    @Override
     public void handleEvent() throws InvalidEntityException {
-        String helpMessage = HelpMap.getOrDefault(messageEvent.message.get(2).toLowerCase(), HelpBasicString);
+    	String helpTarget = messageEvent.commandArgs.size() > 0 ? messageEvent.commandArgs.get(0) : "";
+        String helpMessage = HelpMap.getOrDefault(helpTarget.toLowerCase(), HelpBasicString);
         sendMessage(helpMessage);
     }
 }

@@ -22,27 +22,36 @@ public class MessageEvent  {
     public String pointedAt;
     public User author;
 
-    public MessageEvent(MessageReceivedEvent event){
+    public MessageEvent(MessageReceivedEvent event, boolean locked){
         this.event = event;
-        parseEvent();
+        if(locked) {
+        	parseEvent(2);
+        } else {
+            parseEvent(0);
+        }
     }
 
-    private void parseEvent(){
-        if(this.event == null){
+    private void parseEvent(int offset){
+        if(event == null){
             return;
         }
-        this.author = event.getAuthor();
-        this.messageRaw = event.getMessage().getContentRaw();
-        this.messageDisplay = event.getMessage().getContentDisplay();
-        this.message = new ArrayList<String>(Arrays.asList(event.getMessage().getContentDisplay().trim().replaceAll(" +", " ").split(" ")));
+        author = event.getAuthor();
+        messageRaw = event.getMessage().getContentRaw();
+        messageDisplay = event.getMessage().getContentDisplay();
+        message = new ArrayList<String>(Arrays.asList(event.getMessage().getContentDisplay().trim().replaceAll(" +", " ").split(" ")));
         
-        this.commandArgs = this.message.subList(2, message.size());
+        if(message.size() > 1 - offset) {
+        	commandArgs = message.subList(2 - offset, message.size());
+        }
         
-        this.pointedAt = message.get(0);
-        if(this.message.size() > 1){
-            this.commandString = message.get(1);
+        if(offset == 0) {
+        	pointedAt = message.get(0);
+        }
+        
+        if(message.size() > 1 && offset == 0){
+            commandString = message.get(1);
         } else {
-            this.commandString = "";
+            commandString = "";
         }
     }
 }
