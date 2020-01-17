@@ -25,6 +25,7 @@ public class MessageEvent  {
     public MessageEvent(MessageReceivedEvent event, boolean locked){
         this.event = event;
         if(locked) {
+        	//Ignore the botname and command, we already know it
         	parseEvent(2);
         } else {
             parseEvent(0);

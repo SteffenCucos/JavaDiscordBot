@@ -1,6 +1,6 @@
 package EventHandlers;
 
-public class SuccessLockEventHandler extends EventHandler {
+public class SuccessLockEventHandler extends AbstractEventHandler {
 	
 	public SuccessLockEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;

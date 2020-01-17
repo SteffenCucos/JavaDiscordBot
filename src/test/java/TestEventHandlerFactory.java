@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.mockito.Mockito;
 import org.junit.Test;
 import EventHandlers.*;
+import Exceptions.InvalidEntityException;
 import Main.Main;
 
 import static org.junit.Assert.assertTrue;
@@ -88,21 +89,21 @@ public class TestEventHandlerFactory {
 
     public void verifyGetEventHandler(String defaultString, MessageReceivedEvent event, String toString){
         try {
-            EventHandler handler = handlerFactory.getEventHandler(event);
+            AbstractEventHandler handler = handlerFactory.getEventHandler(event);
             verifyDefaultHandler(handler,defaultString,event,toString);
         } catch (Exception e){
             assertTrue(false);
         }
     }
 
-    public void verifyDefaultHandler(EventHandler handler, String defaultString, MessageReceivedEvent event, String toString){
+    public void verifyDefaultHandler(AbstractEventHandler handler, String defaultString, MessageReceivedEvent event, String toString){
         assertTrue(handler instanceof DefaultEventHandler);//it is an instance of DefaultEventHandler
         DefaultEventHandler castedHandler = (DefaultEventHandler)handler;
         assertTrue(castedHandler.defaultString.equals(defaultString));
         verifyGenericHandler(handler,event,toString);
     }
 
-    public void verifyGenericHandler(EventHandler handler, MessageReceivedEvent event, String toString){
+    public void verifyGenericHandler(AbstractEventHandler handler, MessageReceivedEvent event, String toString){
         assertTrue(handler.messageEvent.event.equals(event));//it passes the event into the handler
         assertTrue(handler.toString().equals(toString));//it gave it the right author and message
     }

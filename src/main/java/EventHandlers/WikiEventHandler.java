@@ -1,13 +1,16 @@
 package EventHandlers;
 
 import org.json.JSONArray;
+
+import Exceptions.InvalidEntityException;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.stream.Collectors;
 
-public class WikiEventHandler extends EventHandler {
+public class WikiEventHandler extends AbstractEventHandler {
 
     private static final String baseURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search=";
     private static final String endURL = "&limit=100&namespace=0&format=json";
@@ -71,7 +74,7 @@ public class WikiEventHandler extends EventHandler {
 
 
         } catch(Exception e) {
-            super.sendMessage(urlString);
+            super.sendMessage(urlString, MessageFormat.PLAIN_TEXT);
             System.out.println(e);
             return "";
         }

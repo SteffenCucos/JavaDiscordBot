@@ -1,6 +1,8 @@
 package EventHandlers;
 
-public class DefaultEventHandler extends EventHandler {
+import Exceptions.InvalidEntityException;
+
+public class DefaultEventHandler extends AbstractEventHandler {
 
     public String defaultString;
 

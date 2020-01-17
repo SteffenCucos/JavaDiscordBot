@@ -1,6 +1,8 @@
 package EventHandlers;
 
-public class NullEventHandler extends EventHandler {
+import Exceptions.InvalidEntityException;
+
+public class NullEventHandler extends AbstractEventHandler {
 
     public NullEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;

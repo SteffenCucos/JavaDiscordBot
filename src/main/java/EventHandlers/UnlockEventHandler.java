@@ -1,6 +1,6 @@
 package EventHandlers;
 
-public class UnlockEventHandler extends EventHandler {
+public class UnlockEventHandler extends AbstractEventHandler {
 
 	public UnlockEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class CommandEventHandler extends EventHandler {
+public class CommandEventHandler extends AbstractEventHandler {
 	
 	public static boolean supportsLock = true;
 	
@@ -49,15 +49,13 @@ public class CommandEventHandler extends EventHandler {
 	@Override
 	public void handleEvent() {
 		List<String> args = messageEvent.commandArgs.subList(1, messageEvent.commandArgs.size());
-		
+		String response = null;
 		switch(type) {
 			case CD:
-				String newDir = cd(args);
-				sendMessage(newDir);
+				response = cd(args);
 				break;
 			case DIR:
-				String dir = getDirString();
-				sendMessage(dir);
+				response = getDirString();
 				break;
 			case CP:
 				Entry<File, String> toSend = cp(args);
@@ -68,12 +66,12 @@ public class CommandEventHandler extends EventHandler {
 				}
 				break;
 			case CAT:
-				String cat = getCatString(args);
-				sendMessage(cat);
+				response = getCatString(args);
 				break;
 			default:
 				break;
 		}
+		sendMessage(response, MessageFormat.CODE_BLOCK);
 	}
 	
 	private Entry<File, String> cp(List<String> args) {
@@ -119,7 +117,7 @@ public class CommandEventHandler extends EventHandler {
 				for (String line : contents) {
 					message += "\n" + line;
 				}
-				return EventHandler.formatMessage(message);
+				return AbstractEventHandler.formatMessage(message);
 			} else if (isDir) {
 				return f.getName() + " is a directory not a file.";
 			} else {
@@ -130,7 +128,7 @@ public class CommandEventHandler extends EventHandler {
 
 	public String getDirString() {
 		try {
-			String dir = "```" + EventHandlerFactory.directory.getCanonicalPath();
+			String dir = EventHandlerFactory.directory.getCanonicalPath();
 			for(File f: EventHandlerFactory.directory.listFiles()) {
 				if (f.isDirectory()) {
 					dir += "\n<D> ";
@@ -141,7 +139,6 @@ public class CommandEventHandler extends EventHandler {
 				}
 				dir += f.getName();
 			}
-			dir += "```";
 			return dir;
 		} catch (IOException e) { return "dir failed"; }
 	}

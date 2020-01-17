@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import Exceptions.InvalidEntityException;
+
 public class EventHandlerFactory {
     public static final int NAME_LENGTH = Main.BOT_NAME.length();
     public static final String PONG_STRING = "Pong!";
@@ -41,14 +43,14 @@ public class EventHandlerFactory {
 
     public EventHandlerFactory(){}
 
-    public EventHandler getEventHandler(MessageReceivedEvent event) throws InvalidEntityException {
+    public AbstractEventHandler getEventHandler(MessageReceivedEvent event) throws InvalidEntityException {
         if(event == null) {
             throw new InvalidEntityException("null event!");
         } 
         
     	MessageEvent messageEvent = new MessageEvent(event, false);
         COMMAND command = validateMessageEvent(messageEvent);
-        EventHandler handler = getEventHandler(command, messageEvent); 
+        AbstractEventHandler handler = getEventHandler(command, messageEvent); 
         
         if(handler instanceof SuccessLockEventHandler) {
         	lockCommand = getLockTarget(messageEvent);
@@ -61,7 +63,7 @@ public class EventHandlerFactory {
         return handler;
     }
     
-    public EventHandler getEventHandler(COMMAND command, MessageEvent messageEvent) {
+    public AbstractEventHandler getEventHandler(COMMAND command, MessageEvent messageEvent) {
         switch (command) {
 	        case PING:   	return new DefaultEventHandler(messageEvent, PONG_STRING);
 	        case UNKNOWN:	return new DefaultEventHandler(messageEvent, UNKNOWN_COMMAND);
@@ -71,7 +73,7 @@ public class EventHandlerFactory {
 	        case COMMAND:	return new CommandEventHandler(messageEvent);
 	        case LOCK: {
 	        	COMMAND lockTarget = getLockTarget(messageEvent);
-	        	EventHandler lockTargetHandler = getEventHandler(lockTarget, messageEvent);
+	        	AbstractEventHandler lockTargetHandler = getEventHandler(lockTarget, messageEvent);
 	        	if(lockTargetHandler.supportsLock()) {
 	        		return new SuccessLockEventHandler(messageEvent);
 	        	} 

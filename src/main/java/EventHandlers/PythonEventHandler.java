@@ -9,7 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PythonEventHandler extends EventHandler  {
+import EventHandlers.EventHandler.MessageFormat;
+import Exceptions.InvalidEntityException;
+
+public class PythonEventHandler extends AbstractEventHandler  {
 
 	public enum TYPE {
 		 RUN,
@@ -33,7 +36,6 @@ public class PythonEventHandler extends EventHandler  {
 	        	} else {
 	        		type = TYPE.NULL;
 	        	}
-	        	
 	    }	
     }
     
@@ -61,7 +63,7 @@ public class PythonEventHandler extends EventHandler  {
 			default:
 				break;
 	    	}
-    	sendMessage(output);
+    	sendMessage(output, MessageFormat.CODE_BLOCK);
     }
     
     
@@ -100,7 +102,7 @@ public class PythonEventHandler extends EventHandler  {
 		        		+ error
 		        		+ "-----END-ERROR------";
 	        }
-	        return EventHandler.formatMessage(toSend);
+	        return AbstractEventHandler.formatMessage(toSend);
     	}  catch (Exception e) {
 	    	System.out.println(e.getMessage());
 	    	return "500 Error";
