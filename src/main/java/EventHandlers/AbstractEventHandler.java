@@ -6,6 +6,10 @@ import Exceptions.InvalidEntityException;
 
 public abstract class AbstractEventHandler implements EventHandler {
 	
+	public static final String CODE_BLOCK_IDENTIFIER = "```";
+	public static final int MAX_RAW_MESSAGE_LENGTH = 2000;
+	public static final int MAX_FORMATTED_MESSAGE_LENGTH = MAX_RAW_MESSAGE_LENGTH - 2*CODE_BLOCK_IDENTIFIER.length();
+	
     public MessageEvent messageEvent;
 
     public void handleEvent() throws InvalidEntityException {
@@ -20,7 +24,6 @@ public abstract class AbstractEventHandler implements EventHandler {
     	} catch(Exception e) {
     		sendMessage(e.getMessage());
     	}
-
     }
     
     public void sendMessage(String message) {
@@ -29,16 +32,20 @@ public abstract class AbstractEventHandler implements EventHandler {
     
     public void sendMessage(String message, MessageFormat format) {
     	if(message != null && message.length() > 0) {
-    		if(format == MessageFormat.CODE_BLOCK) {
-    			message = "```" + message + "```";
-    		} 
+    		message = formatMessage(message, format);
     		this.messageEvent.event.getChannel().sendMessage(message).queue();
             System.out.println(this.toString());
     	}
     }
     
-    public static String formatMessage(String message) {
-    	return message.substring(0, Math.min(1994, message.length()));
+    public static String formatMessage(String message, MessageFormat format) {
+    	if(format == MessageFormat.CODE_BLOCK) {
+    		message = message.substring(0, Math.min(MAX_FORMATTED_MESSAGE_LENGTH, message.length()));
+			message = CODE_BLOCK_IDENTIFIER + message + CODE_BLOCK_IDENTIFIER;
+		}  else {
+			message.substring(0, Math.min(MAX_RAW_MESSAGE_LENGTH, message.length()));
+		}
+    	return message;
     }
     
     public boolean supportsLock() {
@@ -46,7 +53,7 @@ public abstract class AbstractEventHandler implements EventHandler {
     }
     
     @Override
-    public String toString(){
+    public String toString() {
         String message = messageEvent.messageDisplay;
         String author = messageEvent.author.getName();
         return "Received a message from " + author + ": " + message;

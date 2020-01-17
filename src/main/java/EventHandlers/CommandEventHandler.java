@@ -12,32 +12,33 @@ import java.util.stream.Collectors;
 
 public class CommandEventHandler extends AbstractEventHandler {
 	
-	public static boolean supportsLock = true;
-	
-	enum TYPE {
+	enum COMMAND_TYPE {
 		 CD,
 		 DIR,
 		 CP,
-		 CAT,
-		 NULL
+		 CAT
 	}
 	
-	public TYPE type = TYPE.NULL;
+	public COMMAND_TYPE type;
 	
 	public CommandEventHandler(MessageEvent messageEvent) {
         this.messageEvent = messageEvent;
         List<String> commandArgs = messageEvent.commandArgs;
         switch(commandArgs.get(0)) {
 	        case "cd":
-	        	type = TYPE.CD; break;
+	        	type = COMMAND_TYPE.CD;
+	        	break;
 	        case "dir":
-	        	type = TYPE.DIR; break;
+	        	type = COMMAND_TYPE.DIR;
+	        	break;
 	        case "cp":
-	        	type = TYPE.CP; break;
+	        	type = COMMAND_TYPE.CP;
+	        	break;
 	        case "cat":
-	        	type = TYPE.CAT; break;
+	        	type = COMMAND_TYPE.CAT;
+	        	break;
 	        default:
-	        	type = TYPE.NULL;
+	        	type = null;
         }
 	}
 	
@@ -91,7 +92,8 @@ public class CommandEventHandler extends AbstractEventHandler {
 	private String cd(List<String> args) {
 		String dest = args.stream().collect(Collectors.joining(" "));
 		try {
-			if(dest.equals("%RESET%")) {//resets the directory to where it started
+			if(dest.equals("%RESET%")) {
+				//resets the directory to where it started
 				EventHandlerFactory.directory = EventHandlerFactory.STARTPATH;
 				return EventHandlerFactory.directory.getCanonicalPath();
 			} else {
@@ -99,31 +101,32 @@ public class CommandEventHandler extends AbstractEventHandler {
 				EventHandlerFactory.directory = new File(path);
 				return EventHandlerFactory.directory.getCanonicalPath();
 			}
-		} catch (Exception e) { return dest + " is not a directory"; }
-		
+		} catch (Exception e) {
+			return dest + " is not a directory"; 
+		}
 	}
 
 	public String getCatString(List<String> args) {
-		String cat = "";
 		String fname = args.stream().collect(Collectors.joining(" "));
 		try {
 			File f = new File(EventHandlerFactory.directory.getCanonicalPath() + "/"  + fname);
 			boolean isFile = f.isFile();
 			boolean isDir = f.isDirectory();
 			if(isFile) {
-				//read the file
 				List<String> contents = Files.readAllLines(Paths.get(f.getAbsolutePath()), StandardCharsets.UTF_8);
 				String message = "";
 				for (String line : contents) {
 					message += "\n" + line;
 				}
-				return AbstractEventHandler.formatMessage(message);
+				return message;
 			} else if (isDir) {
 				return f.getName() + " is a directory not a file.";
 			} else {
 				return f.getName() + " is not a file or a directory.";
 			}
-		} catch (IOException e) { return "No such file: " + fname; }
+		} catch (IOException e) {
+			return "No such file: " + fname; 
+		}
 	}
 
 	public String getDirString() {
@@ -140,6 +143,8 @@ public class CommandEventHandler extends AbstractEventHandler {
 				dir += f.getName();
 			}
 			return dir;
-		} catch (IOException e) { return "dir failed"; }
+		} catch (IOException e) {
+			return "dir failed"; 
+		}
 	}
 }

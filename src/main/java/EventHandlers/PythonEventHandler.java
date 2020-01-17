@@ -102,7 +102,7 @@ public class PythonEventHandler extends AbstractEventHandler  {
 		        		+ error
 		        		+ "-----END-ERROR------";
 	        }
-	        return AbstractEventHandler.formatMessage(toSend);
+	        return toSend;
     	}  catch (Exception e) {
 	    	System.out.println(e.getMessage());
 	    	return "500 Error";

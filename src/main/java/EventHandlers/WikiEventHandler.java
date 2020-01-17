@@ -74,7 +74,7 @@ public class WikiEventHandler extends AbstractEventHandler {
 
 
         } catch(Exception e) {
-            super.sendMessage(urlString, MessageFormat.PLAIN_TEXT);
+            super.sendMessage(urlString);
             System.out.println(e);
             return "";
         }
