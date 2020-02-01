@@ -9,5 +9,7 @@ public interface EventHandler {
     void handleEvent() throws Exception;
     void sendMessage(String message);
     void sendMessage(String message, MessageFormat format);
-    boolean supportsLock();
+    default boolean supportsLock() {
+    	return false;
+    }
 }

@@ -9,10 +9,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import EventHandlers.EventHandler.MessageFormat;
 import Exceptions.InvalidEntityException;
 
-public class PythonEventHandler extends AbstractEventHandler  {
+public class PythonEventHandler extends LockableEventHandler  {
 
 	public enum TYPE {
 		 RUN,
@@ -31,17 +30,12 @@ public class PythonEventHandler extends AbstractEventHandler  {
 	        case "create":
 	        	type = TYPE.CREATE; break;
 	        default:
-	        	if(command.contains("```")) {
+	        	if(command.contains(CODE_BLOCK_IDENTIFIER)) {
 	        		type = TYPE.CODE;
 	        	} else {
 	        		type = TYPE.NULL;
 	        	}
 	    }	
-    }
-    
-    @Override
-    public boolean supportsLock() {
-    	return true;
     }
 
     @Override

@@ -30,7 +30,8 @@ public class EventHandlerFactory {
         NULL
     }
 
-    public static final Map<String, COMMAND> commandMap = new HashMap<String, COMMAND>() {{
+    @SuppressWarnings("serial")
+	public static final Map<String, COMMAND> commandMap = new HashMap<String, COMMAND>() {{
        put("!ping",COMMAND.PING);
        put("!help",COMMAND.HELP);
        put("!wiki",COMMAND.WIKI);

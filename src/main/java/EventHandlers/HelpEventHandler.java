@@ -5,7 +5,7 @@ import java.util.Map;
 
 import Exceptions.InvalidEntityException;
 
-public class HelpEventHandler extends AbstractEventHandler {
+public class HelpEventHandler extends LockableEventHandler {
 
     public static final String HelpPingString = "'!Ping' will prompt the bot to respond with 'Pong!'.";
     
@@ -27,7 +27,8 @@ public class HelpEventHandler extends AbstractEventHandler {
     
     public static final String HelpBasicString = "Available Commands:\n!Help\n!Ping\n!Wiki\n!Python\n!Command";
 
-    public static final Map<String, String> HelpMap = new HashMap<String, String>() {{
+    @SuppressWarnings("serial")
+	public static final Map<String, String> HelpMap = new HashMap<String, String>() {{
         put("!ping", HelpPingString );
         put("!help", HelpHelpString);
         put("!wiki", HelpWikiString);
@@ -38,11 +39,6 @@ public class HelpEventHandler extends AbstractEventHandler {
 
     public HelpEventHandler(MessageEvent messageEvent){
         this.messageEvent = messageEvent;
-    }
-
-    @Override
-    public boolean supportsLock() {
-    	return true;
     }
     
     @Override

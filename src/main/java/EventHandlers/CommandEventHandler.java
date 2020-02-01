@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class CommandEventHandler extends AbstractEventHandler {
+public class CommandEventHandler extends LockableEventHandler {
 	
 	enum COMMAND_TYPE {
 		 CD,
@@ -22,29 +22,24 @@ public class CommandEventHandler extends AbstractEventHandler {
 	public COMMAND_TYPE type;
 	
 	public CommandEventHandler(MessageEvent messageEvent) {
-        this.messageEvent = messageEvent;
-        List<String> commandArgs = messageEvent.commandArgs;
-        switch(commandArgs.get(0)) {
-	        case "cd":
-	        	type = COMMAND_TYPE.CD;
-	        	break;
-	        case "dir":
-	        	type = COMMAND_TYPE.DIR;
-	        	break;
-	        case "cp":
-	        	type = COMMAND_TYPE.CP;
-	        	break;
-	        case "cat":
-	        	type = COMMAND_TYPE.CAT;
-	        	break;
-	        default:
-	        	type = null;
-        }
-	}
-	
-	@Override
-	public boolean supportsLock() {
-		return true;
+		this.messageEvent = messageEvent;
+		List<String> commandArgs = messageEvent.commandArgs;
+		switch(commandArgs.get(0)) {
+			case "cd":
+				type = COMMAND_TYPE.CD;
+				break;
+			case "dir":
+				type = COMMAND_TYPE.DIR;
+				break;
+			case "cp":
+				type = COMMAND_TYPE.CP;
+				break;
+			case "cat":
+				type = COMMAND_TYPE.CAT;
+				break;
+			default:
+				type = null;
+		}
 	}
 	
 	@Override
@@ -138,7 +133,7 @@ public class CommandEventHandler extends AbstractEventHandler {
 				} else if (f.isFile()){
 					dir += "\n<F> ";
 				} else {
-					dir += "\n    ";
+					dir += "\n	";
 				}
 				dir += f.getName();
 			}

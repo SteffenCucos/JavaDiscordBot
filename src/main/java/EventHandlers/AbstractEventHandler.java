@@ -48,10 +48,6 @@ public abstract class AbstractEventHandler implements EventHandler {
     	return message;
     }
     
-    public boolean supportsLock() {
-    	return false;
-    }
-    
     @Override
     public String toString() {
         String message = messageEvent.messageDisplay;
