@@ -1,0 +1,8 @@
+/.gradle/
+/bin/
+
+/.classpath
+/.project
+/.settings/org.eclipse.buildship.core.prefs
+/DEFAULT.py
+/src/main/java/Main/Config.java
